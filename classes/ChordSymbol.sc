@@ -307,7 +307,7 @@ NoteSymbol {
 
     noteProg {
         ^this.collect { |name|
-			if (name.isSymbol, { name.asNote }, { name.noteProg });
+			if (name.isKindOf(Symbol), { name.asNote }, { name.noteProg });
 		};
     }
 
