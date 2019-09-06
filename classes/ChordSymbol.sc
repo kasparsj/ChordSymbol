@@ -305,8 +305,10 @@ NoteSymbol {
         ^ChordSymbol.degreeProgression(this, scale, notesPerOctave);
     }
 
-    noteProg {  
-        ^this.collect { |name| name.asNote };
+    noteProg {
+        ^this.collect { |name|
+			if (name.isSymbol, { name.asNote }, { name.noteProg });
+		};
     }
 
     noteProgDegree { |scale notesPerOctave=12|
@@ -352,4 +354,20 @@ NoteSymbol {
     performKeyToDegree2 { |key stepsPerOctave=12| 
         ^degrees.performKeyToDegree2(key, stepsPerOctave)
     }
+}
+
++ String {
+	noteProg {
+		^this.split($ )
+		.reject({|n| n.size == 0 })
+		.collect({|n| n.asSymbol})
+		.noteProg;
+	}
+
+	chordProg {
+		^this.split($ )
+		.reject({|n| n.size == 0 })
+		.collect({|c| c.asSymbol})
+		.chordProg;
+	}
 }
